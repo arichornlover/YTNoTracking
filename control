@@ -1,0 +1,9 @@
+Package: com.arichorm.ytnotracking
+Name: YTNoTracking
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: An iOS YouTube Tweak that disables Tracking Parameters in the YouTube App.
+Maintainer: arichorn
+Author: arichorn
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000)
