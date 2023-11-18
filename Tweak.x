@@ -2,11 +2,35 @@
 #import <Foundation/Foundation.h>
 
 %hook YTICompactLinkRenderer
-+ (BOOL)hasTrackingParams { return NO; }
++ (BOOL)hasTrackingParams {
+    return NO;
+}
 %end
 
 %hook YTIReelPlayerOverlayRenderer
-+ (BOOL)hasTrackingParams { return NO; }
++ (BOOL)hasTrackingParams {
+    return NO;
+}
+%end
+
+%hook YTIShareTargetServiceUpdateRenderer
++ (BOOL)hasTrackingParams {
+    return NO;
+}
+%new
+- (id)removeParameterFromURL:(id)arg1 {
+    NSURLComponents *components = [NSURLComponents componentsWithURL:arg1 resolvingAgainstBaseURL:NO];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"NOT (name == %@)", @"si"];
+    NSArray<NSURLQueryItem *> *filteredQueryItems = [components.queryItems filteredArrayUsingPredicate:predicate];
+    components.queryItems = filteredQueryItems;
+    
+    NSURL *modifiedURL = components.URL;
+    if (!modifiedURL) {
+        modifiedURL = arg1;
+    }
+    return modifiedURL;
+}
 %end
 
 int main(int argc, char * argv[]) {
